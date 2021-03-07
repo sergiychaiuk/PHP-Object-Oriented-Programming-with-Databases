@@ -3,9 +3,19 @@
 require_login();
 ?>
 <?php
-  
+
+$current_page = $_GET['page'] ?? 1;
+$per_page = 5;
+$total_count = Bicycle::count_all();
+
+$pagination = new Pagination($current_page, $per_page, $total_count);
 // Find all bicycles;
-$bicycles = Bicycle::find_all();
+//$bicycles = Bicycle::find_all();
+
+$sql = "select * from bicycles ";
+$sql .= "limit {$per_page} ";
+$sql .= "offset {$pagination->offset()}";
+$bicycles = Bicycle::find_by_sql($sql);
   
 ?>
 <?php $page_title = 'Bicycles'; ?>
