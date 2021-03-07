@@ -49,4 +49,30 @@ class Pagination {
         return $link;
     }
 
+    public function number_links($url = "") {
+        $output = "";
+        for ($i = 1; $i <= $this->total_pages(); $i++) {
+            if ($i == $this->current_page) {
+                $output .= "<span class='selected'>{$i}</span>";
+            } else {
+                $output .= "<a href='{$url}?page={$i}'>{$i}</a>";
+            }
+        }
+        return $output;
+    }
+
+    public function page_links($url) {
+        $output = "";
+        if ($this->total_pages() > 1) {
+            $output .= "<div class='pagination'>";
+
+            $output .= $this->previous_link($url);
+            $output .= $this->number_links($url);
+            $output .= $this->next_link($url);
+
+            $output .= "</div>";
+        }
+        return $output;
+    }
+
 }
