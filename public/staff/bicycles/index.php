@@ -15,6 +15,7 @@ $pagination = new Pagination($current_page, $per_page, $total_count);
 $sql = "select * from bicycles ";
 $sql .= "limit {$per_page} ";
 $sql .= "offset {$pagination->offset()}";
+
 $bicycles = Bicycle::find_by_sql($sql);
   
 ?>
@@ -60,6 +61,19 @@ $bicycles = Bicycle::find_by_sql($sql);
     	  </tr>
       <?php } ?>
   	</table>
+
+      <?
+      if ($pagination->total_pages() > 1) {
+          echo "<div class='pagination'>";
+
+          $url = url_for('/staff/bicycles/index.php');
+
+          echo $pagination->previous_link($url);
+          echo $pagination->next_link($url);
+
+          echo "</div>";
+      }
+      ?>
 
   </div>
 
